@@ -24,7 +24,7 @@ let persons = [
     "number": "39-23-6423122"
   }
 ]
-
+const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   
   app.use(express.json())
 
@@ -57,6 +57,17 @@ let persons = [
   
     persons = persons.concat(note)
     response.json(note)
+  })
+
+  app.get('/api/persons/info', (req, res) => {
+    const infoNote = {
+      content: 'Phonebook',
+      phoneBook: persons.length,
+      date: new Date()
+    }
+   const infoString = infoNote.content +" has info for "+  infoNote.phoneBook + " people <p></p> the date is: "+ infoNote.date
+    console.log( infoString)
+    res.send(infoString)
   })
   
   app.get('/api/persons', (req, res) => {
