@@ -32,27 +32,25 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     res.send('<h1>Hello World!</h1>')
   })
   
-  const generateId = () => {
-    const maxId = persons.length > 0
-      ? Math.max(...persons.map(n => n.id))
-      : 0
-    return maxId + 1
+  const randomId = () => {
+    const rndid = Math.random() * 100000000
+    console.log(rndid)
+    return Math.floor(rndid)
   }
   
   app.post('/api/persons', (request, response) => {
     const body = request.body
   
-    if (!body.content) {
+    if (!body.name) {
       return response.status(400).json({ 
         error: 'content missing' 
       })
     }
   
     const person = {
-      content: body.content,
-      important: body.important || false,
-      date: new Date(),
-      id: generateId(),
+      name: body.name,
+      number: body.number || '00-00-00000',
+      id: randomId(),
     }
   
     persons = persons.concat(person)
