@@ -48,15 +48,15 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       })
     }
   
-    const note = {
+    const person = {
       content: body.content,
       important: body.important || false,
       date: new Date(),
       id: generateId(),
     }
   
-    persons = persons.concat(note)
-    response.json(note)
+    persons = persons.concat(person)
+    response.json(person)
   })
 
   app.get('/api/persons/info', (req, res) => {
@@ -76,17 +76,17 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   
   app.delete('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
-    persons = persons.filter(note => note.id !== id)
+    persons = persons.filter(person => person.id !== id)
   
     response.status(204).end()
   })
   
   app.get('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
-    const note = persons.find(note => note.id === id)
+    const person = persons.find(person => person.id === id)
   
-    if (note) {
-      response.json(note)
+    if (person) {
+      response.json(person)
     } else {
       response.status(404).end()
     }
