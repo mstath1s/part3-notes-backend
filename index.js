@@ -1,4 +1,5 @@
 
+const { json } = require('express');
 const express = require('express')
 const morgan = require('morgan')
 const app = express()
@@ -36,17 +37,23 @@ const requestLogger = (request, response, next) => {
 }
 
 app.use(express.json())
-app.use( morgan('tiny'))
 
+morgan.token('type', function getId (req) {
+
+ return JSON.stringify(req.body)
+})
+
+
+app.use(morgan(':method :url :status :res[content-length] :response-time :type'))
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello World!</h1>')
 })
 
 const randomId = () => {
-  const rndid = Math.random() * 100000000
+  const rndid =Math.floor( Math.random() * 100000000)
   console.log(rndid)
-  return Math.floor(rndid)
+  return rndid
 }
 
 app.post('/api/persons', (request, response) => {
